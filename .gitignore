@@ -1,0 +1,7 @@
+*.sublime-workspace
+
+node_modules/
+npm-debug.log
+
+.AppleDouble/
+.DS_Store

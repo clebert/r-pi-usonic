@@ -1,0 +1,45 @@
+{
+    "name": "r-pi-usonic",
+    "version": "0.0.0",
+    "description": "A Node.js API for the HC-SR04 ultrasonic sensor on Raspberry Pi.",
+    "keywords": [
+        "raspberry",
+        "pi",
+        "gpio"
+    ],
+    "author": {
+        "name": "Clemens Akens",
+        "email": "clebert@me.com",
+        "url": "http://clebert.com/"
+    },
+    "bugs": {
+        "url": "https://github.com/clebert/r-pi-usonic/issues"
+    },
+    "engines": {
+        "node": ">= 0.10.0"
+    },
+    "inceptionYear": 2014,
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://raw.githubusercontent.com/clebert/r-pi-usonic/master/LICENSE"
+        }
+    ],
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/clebert/r-pi-usonic.git"
+    },
+    "scripts": {
+        "test": "node_modules/.bin/grunt"
+    },
+    "devDependencies": {
+        "grunt": "~0.4.4",
+        "grunt-bumpup": "~0.5.2",
+        "grunt-cli": "~0.1.13",
+        "grunt-contrib-jshint": "~0.10.0",
+        "grunt-module": "~0.1.2",
+        "microtime": "~0.5.1",
+        "r-pi-gpio": "~0.1.0"
+    }
+}
