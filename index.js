@@ -71,5 +71,5 @@ UltrasonicSensor.prototype.measureDistance = function () {
         return -1;
     }
 
-    return Math.floor(echoTime / 58);
+    return echoTime / 58;
 };
