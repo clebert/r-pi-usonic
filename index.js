@@ -73,27 +73,3 @@ UltrasonicSensor.prototype.measureDistanceInCm = function () {
 
     return Math.floor(echoTime / 58);
 };
-
-function median(a, b, c) {
-    return Math.max(Math.min(a, b), Math.min(Math.max(a, b), c));
-}
-
-UltrasonicSensor.prototype.measureMedianDistanceInCm = function (timeoutInMs) {
-    var distances = [];
-    var timeout = timeoutInMs * 1000;
-    var loopStartTime = now();
-
-    while (distances.length < 3) {
-        if (now() - loopStartTime > timeout) {
-            return -1;
-        }
-
-        var distance = this.measureDistanceInCm();
-
-        if (distance !== -1) {
-            distances.push(distance);
-        }
-    }
-
-    return median(distances[0], distances[1], distances[2]);
-};

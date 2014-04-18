@@ -26,7 +26,6 @@
 
 * UltrasonicSensor.prototype.destroy() => void
 * UltrasonicSensor.prototype.measureDistanceInCm() => number
-* UltrasonicSensor.prototype.measureMedianDistanceInCm(timeoutInMs: number) => number
 
 ## Running the tests
 
