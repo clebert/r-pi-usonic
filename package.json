@@ -1,6 +1,6 @@
 {
     "name": "r-pi-usonic",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "A Node.js API for the HC-SR04 ultrasonic sensor on Raspberry Pi.",
     "keywords": [
         "raspberry",
