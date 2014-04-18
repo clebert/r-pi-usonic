@@ -44,7 +44,7 @@ function waitForLowEcho(echo) {
     return echoStopTime;
 }
 
-UltrasonicSensor.prototype.measureDistanceInCm = function () {
+UltrasonicSensor.prototype.measureDistance = function () {
     var methodStartTime = now();
 
     this.trigger.write(false).write(true).write(false);

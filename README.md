@@ -25,7 +25,7 @@
 #### Instance methods
 
 * UltrasonicSensor.prototype.destroy() => void
-* UltrasonicSensor.prototype.measureDistanceInCm() => number
+* UltrasonicSensor.prototype.measureDistance() => number
 
 ## Running the tests
 
