@@ -35,13 +35,15 @@
     "scripts": {
         "test": "node_modules/.bin/grunt"
     },
+    "dependencies": {
+        "microtime": "~0.5.1",
+        "r-pi-gpio": "~0.1.0"
+    },
     "devDependencies": {
         "grunt": "~0.4.4",
         "grunt-bumpup": "~0.5.2",
         "grunt-cli": "~0.1.13",
         "grunt-contrib-jshint": "~0.10.0",
-        "grunt-module": "~0.1.2",
-        "microtime": "~0.5.1",
-        "r-pi-gpio": "~0.1.0"
+        "grunt-module": "~0.1.2"
     }
 }
