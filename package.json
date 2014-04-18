@@ -5,7 +5,9 @@
     "keywords": [
         "raspberry",
         "pi",
-        "gpio"
+        "ultrasonic",
+        "sensor",
+        "hcsr04"
     ],
     "author": {
         "name": "Clemens Akens",
