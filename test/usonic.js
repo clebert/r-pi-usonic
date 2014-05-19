@@ -41,7 +41,7 @@ function getDistanceCm() {
                     ', min: ' + minDistanceCm.toFixed(2) +
                     ', max: ' + maxDistanceCm.toFixed(2) +
                     ', count: ' + (count += 1) +
-                    ', (' + ((Date.now() - start) / 1000).toFixed(2) + ')'
+                    ' (' + ((Date.now() - start) / 1000).toFixed(2) + ' sec)'
                 );
 
                 getDistanceCm();
