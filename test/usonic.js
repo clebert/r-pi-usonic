@@ -1,6 +1,6 @@
 'use strict';
 
-var UltrasonicSensor = require('../index');
+var UltrasonicSensor = require('../index').UltrasonicSensor;
 
 var ultrasonicSensor = new UltrasonicSensor(15, 14);
 
