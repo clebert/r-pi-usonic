@@ -11,6 +11,7 @@ function getMedian(a, b, c) {
 var count = 0;
 var maxDistanceCm = -Infinity;
 var minDistanceCm = Infinity;
+var start = Date.now();
 
 function getDistanceCm() {
     setTimeout(function () {
@@ -39,7 +40,8 @@ function getDistanceCm() {
                     'current: ' + distanceCm.toFixed(2) +
                     ', min: ' + minDistanceCm.toFixed(2) +
                     ', max: ' + maxDistanceCm.toFixed(2) +
-                    ', count: ' + (count += 1)
+                    ', count: ' + (count += 1) +
+                    ', (' + ((Date.now() - start) / 1000).toFixed(2) + ')'
                 );
 
                 getDistanceCm();
