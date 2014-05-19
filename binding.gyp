@@ -5,7 +5,6 @@
             "sources": [
                 "src/clock.cc",
                 "src/gpio.cc",
-                "src/index.cc",
                 "src/usonic.cc"
             ]
         }
