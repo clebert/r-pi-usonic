@@ -47,17 +47,32 @@ module.exports = function (grunt) {
                     publish: true
                 }
             }
+        },
+        mochacov: {
+            options: {
+                colors: true,
+                files: 'test/**/*.test.js',
+                ui: 'bdd'
+            },
+            'test-spec': {
+                options: {
+                    reporter: 'spec'
+                }
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-bumpup');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-mocha-cov');
     grunt.loadNpmTasks('grunt-module');
 
     grunt.registerTask('default', [
         'jshint:lint-js',
         'jshint:lint-json'
     ]);
+
+    grunt.registerTask('test', 'mochacov:test-spec');
 
     grunt.registerTask('publish', function (type) {
         grunt.task.run('default');
