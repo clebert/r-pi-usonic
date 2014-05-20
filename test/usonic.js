@@ -13,7 +13,7 @@ var maxDistanceCm = -Infinity;
 var minDistanceCm = Infinity;
 var start = Date.now();
 
-function getDistanceCm() {
+function main() {
     setTimeout(function () {
         var a = ultrasonicSensor.getDistanceCm();
 
@@ -44,10 +44,10 @@ function getDistanceCm() {
                     ' (' + ((Date.now() - start) / 1000).toFixed(2) + ' sec)'
                 );
 
-                getDistanceCm();
+                main();
             }, 60);
         }, 60);
     }, 60);
 }
 
-getDistanceCm();
+main();
