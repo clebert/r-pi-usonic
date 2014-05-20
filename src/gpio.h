@@ -6,13 +6,13 @@
 namespace RPiGpio {
 
     enum Direction {
-        input,
-        output
+        INPUT,
+        OUTPUT
     };
 
     enum Level {
-        high,
-        low
+        HIGH,
+        LOW
     };
 
     Level getLevel(volatile uint32_t *memory, const uint32_t pin);

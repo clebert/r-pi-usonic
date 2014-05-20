@@ -32,6 +32,8 @@ namespace RPiClock {
         #ifndef __MACH__
         if (clock_gettime(CLOCK_REALTIME, &now) == -1) {
             ThrowException(node::ErrnoException(errno));
+
+            return 0;
         }
         #endif
 

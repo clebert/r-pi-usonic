@@ -14,7 +14,7 @@ namespace RPiGpio {
         const uint32_t offset = 13 + (pin > 31);
         const uint32_t value = *(memory + offset) & (1 << bit);
 
-        return value > 0 ? high : low;
+        return value > 0 ? HIGH : LOW;
     }
 
     volatile uint32_t *getMemory(void) {
@@ -22,6 +22,8 @@ namespace RPiGpio {
 
         if (fd == -1) {
             ThrowException(node::ErrnoException(errno));
+
+            return NULL;
         }
 
         const size_t size = sysconf(_SC_PAGESIZE);
@@ -35,6 +37,8 @@ namespace RPiGpio {
 
         if (memory == MAP_FAILED) {
             ThrowException(node::ErrnoException(errno));
+
+            return NULL;
         }
 
         return memory;
@@ -46,14 +50,14 @@ namespace RPiGpio {
 
         *(memory + offset) &= ~(7 << bit);
 
-        if (direction == output) {
+        if (direction == OUTPUT) {
             *(memory + offset) |= (1 << bit);
         }
     }
 
     void setLevel(volatile uint32_t *memory, const uint32_t pin, const Level level) {
         const uint32_t bit = pin % 32;
-        const uint32_t offset = (level == high ? 7 : 10) + (pin > 31);
+        const uint32_t offset = (level == HIGH ? 7 : 10) + (pin > 31);
 
         *(memory + offset) = (1 << bit);
     }
