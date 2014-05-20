@@ -1,6 +1,7 @@
 #include "clock.h"
 #include "gpio.h"
 
+#include <errno.h>
 #include <node.h>
 #include <v8.h>
 
@@ -19,20 +20,36 @@ namespace {
 
         RPiGpio::setLevel(memory, triggerPin, RPiGpio::HIGH);
 
-        RPiClock::setDelayNs(10000); // trigger for at least 10us high level signal
+        if (RPiClock::setDelayNs(10000) == -1) {
+            ThrowException(node::ErrnoException(errno));
+
+            return scope.Close(v8::Undefined());
+        }
 
         RPiGpio::setLevel(memory, triggerPin, RPiGpio::LOW);
 
-        uint32_t startNs;
+        int32_t startNs;
 
         do {
             startNs = RPiClock::getNowNs();
+
+            if (startNs == -1) {
+                ThrowException(node::ErrnoException(errno));
+
+                return scope.Close(v8::Undefined());
+            }
         } while(RPiGpio::getLevel(memory, echoPin) == RPiGpio::LOW);
 
-        uint32_t stopNs;
+        int32_t stopNs;
 
         do {
             stopNs = RPiClock::getNowNs();
+
+            if (stopNs == -1) {
+                ThrowException(node::ErrnoException(errno));
+
+                return scope.Close(v8::Undefined());
+            }
         } while(RPiGpio::getLevel(memory, echoPin) == RPiGpio::HIGH);
 
         const double distanceCm = (double) RPiClock::getDurationNs(startNs, stopNs) / 58000.0;
@@ -41,9 +58,15 @@ namespace {
     }
 
     void init(v8::Handle<v8::Object> exports) {
-        exports->Set(v8::String::NewSymbol("getDistanceCm"), v8::FunctionTemplate::New(getDistanceCm)->GetFunction());
-
         memory = RPiGpio::getMemory();
+
+        if (memory == NULL) {
+            ThrowException(node::ErrnoException(errno));
+
+            return;
+        }
+
+        exports->Set(v8::String::NewSymbol("getDistanceCm"), v8::FunctionTemplate::New(getDistanceCm)->GetFunction());
     }
 
     NODE_MODULE(usonic, init);

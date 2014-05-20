@@ -1,8 +1,6 @@
 #include "gpio.h"
 
-#include <errno.h>
 #include <fcntl.h>
-#include <node.h>
 #include <unistd.h>
 
 #include <sys/mman.h>
@@ -21,8 +19,6 @@ namespace RPiGpio {
         const int32_t fd = open("/dev/mem", O_RDWR | O_SYNC);
 
         if (fd == -1) {
-            ThrowException(node::ErrnoException(errno));
-
             return NULL;
         }
 
@@ -36,8 +32,6 @@ namespace RPiGpio {
         close(fd);
 
         if (memory == MAP_FAILED) {
-            ThrowException(node::ErrnoException(errno));
-
             return NULL;
         }
 

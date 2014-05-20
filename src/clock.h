@@ -5,11 +5,11 @@
 
 namespace RPiClock {
 
-    void setDelayNs(const uint32_t durationNs);
+    int32_t setDelayNs(const int32_t durationNs);
 
-    uint32_t getDurationNs(const uint32_t startNs, const uint32_t stopNs);
+    int32_t getDurationNs(const int32_t startNs, const int32_t stopNs);
 
-    uint32_t getNowNs(void);
+    int32_t getNowNs(void);
 }
 
 #endif

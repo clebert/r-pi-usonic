@@ -2,21 +2,32 @@
 
 #include <errno.h>
 #include <time.h>
-#include <node.h>
 
 namespace RPiClock {
 
-    void setDelayNs(const uint32_t durationNs) {
-        const uint32_t startNs = getNowNs();
+    int32_t setDelayNs(const int32_t durationNs) {
+        const int32_t startNs = getNowNs();
+
+        if (startNs == -1) {
+            return -1;
+        }
 
         while (1) {
-            if (getDurationNs(startNs, getNowNs()) >= durationNs) {
+            int32_t stopNs = getNowNs();
+
+            if (stopNs == -1) {
+                return -1;
+            }
+
+            if (getDurationNs(startNs, stopNs) >= durationNs) {
                 break;
             }
         }
+
+        return 0;
     }
 
-    uint32_t getDurationNs(const uint32_t startNs, const uint32_t stopNs) {
+    int32_t getDurationNs(const int32_t startNs, const int32_t stopNs) {
         int32_t durationNs = stopNs - startNs;
 
         if (durationNs < 0) {
@@ -26,17 +37,19 @@ namespace RPiClock {
         return durationNs;
     }
 
-    uint32_t getNowNs(void) {
+    int32_t getNowNs(void) {
+#ifndef __MACH__
         struct timespec now;
 
-        #ifndef __MACH__
         if (clock_gettime(CLOCK_REALTIME, &now) == -1) {
-            ThrowException(node::ErrnoException(errno));
-
-            return 0;
+            return -1;
         }
-        #endif
 
         return now.tv_nsec;
+#else
+        errno = EPERM;
+
+        return -1;
+#endif
     }
 }
