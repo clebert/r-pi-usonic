@@ -1,6 +1,6 @@
 'use strict';
 
-var UltrasonicSensor = require('../index').UltrasonicSensor;
+var UltrasonicSensor = require('../index.js').UltrasonicSensor;
 
 var ultrasonicSensor = new UltrasonicSensor(15, 14);
 
@@ -13,7 +13,7 @@ var maxDistanceCm = -Infinity;
 var minDistanceCm = Infinity;
 var start = Date.now();
 
-function main() {
+(function main() {
     setTimeout(function () {
         var a = ultrasonicSensor.getDistanceCm();
 
@@ -23,21 +23,21 @@ function main() {
             setTimeout(function () {
                 var c = ultrasonicSensor.getDistanceCm();
 
-                var distanceCm = getMedian(a, b, c);
+                var median = getMedian(a, b, c);
 
-                if (distanceCm > maxDistanceCm) {
-                    maxDistanceCm = distanceCm;
+                if (median > maxDistanceCm) {
+                    maxDistanceCm = median;
                 }
 
-                if (distanceCm < minDistanceCm) {
-                    minDistanceCm = distanceCm;
+                if (median < minDistanceCm) {
+                    minDistanceCm = median;
                 }
 
                 process.stdout.clearLine();
                 process.stdout.cursorTo(0);
 
                 process.stdout.write(
-                    'current: ' + distanceCm.toFixed(2) +
+                    'median: ' + median.toFixed(2) +
                     ', min: ' + minDistanceCm.toFixed(2) +
                     ', max: ' + maxDistanceCm.toFixed(2) +
                     ', count: ' + (count += 1) +
@@ -48,6 +48,4 @@ function main() {
             }, 60);
         }, 60);
     }, 60);
-}
-
-main();
+}());
