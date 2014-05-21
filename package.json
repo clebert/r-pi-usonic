@@ -7,7 +7,9 @@
         "pi",
         "ultrasonic",
         "sensor",
-        "hcsr04"
+        "hcsr04",
+        "mmap",
+        "gpio"
     ],
     "author": {
         "name": "Clemens Akens",

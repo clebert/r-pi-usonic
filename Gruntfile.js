@@ -18,12 +18,14 @@ module.exports = function (grunt) {
                 },
                 src: [
                     '**/*.js',
+                    '!build/**/*.js',
                     '!node_modules/**/*.js'
                 ]
             },
             'lint-json': {
                 src: [
                     '**/*.json',
+                    '!build/**/*.json',
                     '!node_modules/**/*.json'
                 ]
             }
@@ -51,7 +53,7 @@ module.exports = function (grunt) {
         mochacov: {
             options: {
                 colors: true,
-                files: 'test/**/*.test.js',
+                files: 'test/*.test.js',
                 ui: 'bdd'
             },
             'test-spec': {
@@ -68,11 +70,18 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-module');
 
     grunt.registerTask('default', [
+        'lint',
+        'test'
+    ]);
+
+    grunt.registerTask('lint', [
         'jshint:lint-js',
         'jshint:lint-json'
     ]);
 
-    grunt.registerTask('test', 'mochacov:test-spec');
+    grunt.registerTask('test', [
+        'mochacov:test-spec'
+    ]);
 
     grunt.registerTask('publish', function (type) {
         grunt.task.run('default');

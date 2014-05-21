@@ -1,41 +1,48 @@
-# r-pi-usonic [![NPM version](https://badge.fury.io/js/r-pi-usonic.png)](https://badge.fury.io/js/r-pi-usonic)
+# r-pi-usonic [![Build Status](https://travis-ci.org/clebert/r-pi-usonic.png?branch=master)](https://travis-ci.org/clebert/r-pi-usonic) [![NPM version](https://badge.fury.io/js/r-pi-usonic.png)](https://badge.fury.io/js/r-pi-usonic)
 
-> A Node.js API for the HC-SR04 ultrasonic sensor on Raspberry Pi.
+> A high performance, memory mapped, Node.js API for the HC-SR04 ultrasonic sensor on Raspberry Pi.
 
 ## Installation
 
-    $ npm install r-pi-usonic --save
+```sh
+npm install r-pi-usonic --save
+```
 
 ## Usage
 
 ### Node.js
 
-    var UltrasonicSensor = require('r-pi-usonic').UltrasonicSensor;
+```javascript
+var UltrasonicSensor = require('r-pi-usonic').UltrasonicSensor;
+```
 
 ### API
 
-#### Constructor
+### UltrasonicSensor(echoPin: number, triggerPin: number) => void
 
-* UltrasonicSensor(echoID: string, triggerID: string) => Object
+```javascript
+var ultrasonicSensor = new UltrasonicSensor(15, 14);
+```
 
-#### Static methods
+### ultrasonicSensor.getDistanceCm() => number
 
-* UltrasonicSensor.create(echoID: string, triggerID: string) => Object
-
-#### Instance methods
-
-* UltrasonicSensor.prototype.destroy() => void
-* UltrasonicSensor.prototype.measureDistance() => number
+```javascript
+var distanceCm = ultrasonicSensor.getDistanceCm();
+```
 
 ## Running the tests
 
 To run the test suite first install the development dependencies:
 
-    $ npm install
+```sh
+npm install
+```
 
 then run the tests:
 
-    $ npm test
+```sh
+npm test
+```
 
 ## License
 
