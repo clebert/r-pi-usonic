@@ -1,7 +1,12 @@
 #include "clock.h"
 
-#include <errno.h>
 #include <time.h>
+
+#ifdef __MACH__
+
+#include <errno.h>
+
+#endif
 
 namespace RPiClock {
 
@@ -38,7 +43,8 @@ namespace RPiClock {
     }
 
     int32_t getNowNs(void) {
-#ifndef __MACH__
+        #ifndef __MACH__
+
         struct timespec now;
 
         if (clock_gettime(CLOCK_REALTIME, &now) == -1) {
@@ -46,10 +52,13 @@ namespace RPiClock {
         }
 
         return now.tv_nsec;
-#else
+
+        #else
+
         errno = EPERM;
 
         return -1;
-#endif
+
+        #endif
     }
 }
