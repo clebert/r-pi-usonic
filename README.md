@@ -1,6 +1,6 @@
 # r-pi-usonic [![Build Status](https://travis-ci.org/clebert/r-pi-usonic.png?branch=master)](https://travis-ci.org/clebert/r-pi-usonic) [![NPM version](https://badge.fury.io/js/r-pi-usonic.png)](https://badge.fury.io/js/r-pi-usonic)
 
-> A high performance, memory mapped, Node.js API for the HC-SR04 ultrasonic sensor on Raspberry Pi.
+> A high performance, memory mapped, Node.js API for the HC-SR04 ultrasonic sensor connected to a Raspberry Pi.
 
 ## Installation
 
