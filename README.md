@@ -5,7 +5,7 @@
 ## Installation
 
 ```sh
-npm install r-pi-usonic
+npm install r-pi-usonic --save
 ```
 
 ## Usage
