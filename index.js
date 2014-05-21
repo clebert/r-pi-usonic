@@ -1,75 +1,39 @@
 'use strict';
 
-var GPIO = require('r-pi-gpio').GPIO;
-var now = require('microtime').now;
+var typeutil = require('typeutil');
 
-function UltrasonicSensor(echoID, triggerID) {
-    this.echo = GPIO.input(echoID);
-    this.trigger = GPIO.output(triggerID);
+var usonic;
+
+if (process.env.R_PI_USONIC_TEST !== 'true') {
+    usonic = require('./build/Release/usonic');
+} else {
+    usonic = {
+        getDistanceCm: function (echoPin, triggerPin) {
+            return echoPin - triggerPin;
+        }
+    };
 }
+
+function isValidPin(pin) {
+    return typeutil.isInteger(pin) && pin >= 0 && pin <= 53;
+}
+
+var UltrasonicSensor = typeutil.typify(function (echoPin, triggerPin) {
+    if (!(this instanceof UltrasonicSensor)) {
+        throw new Error('Missing new keyword.');
+    }
+
+    if (!isValidPin(echoPin)) {
+        throw new Error('Invalid echo pin.');
+    }
+
+    if (!isValidPin(triggerPin)) {
+        throw new Error('Invalid trigger pin.');
+    }
+
+    this.getDistanceCm = typeutil.typify(function () {
+        return usonic.getDistanceCm(echoPin, triggerPin);
+    }, '() => number');
+}, '(number, number) => void');
 
 exports.UltrasonicSensor = UltrasonicSensor;
-
-UltrasonicSensor.create = function (echoID, triggerID) {
-    return new UltrasonicSensor(echoID, triggerID);
-};
-
-UltrasonicSensor.prototype.destroy = function () {
-    this.echo.destroy();
-    this.trigger.destroy();
-};
-
-function waitForHighEcho(echo) {
-    var echoStartTime = -1;
-    var loopStartTime = now();
-
-    while (!echo.read()) {
-        echoStartTime = now();
-
-        if (echoStartTime - loopStartTime > 1000) {
-            return -1;
-        }
-    }
-
-    return echoStartTime;
-}
-
-function waitForLowEcho(echo) {
-    var echoStopTime = -1;
-
-    while (echo.read()) {
-        echoStopTime = now();
-    }
-
-    return echoStopTime;
-}
-
-UltrasonicSensor.prototype.measureDistance = function () {
-    var methodStartTime = now();
-
-    this.trigger.write(false).write(true).write(false);
-
-    var echoStartTime = waitForHighEcho(this.echo);
-
-    if (echoStartTime === -1) {
-        return -1;
-    }
-
-    var echoStopTime = waitForLowEcho(this.echo);
-
-    if (echoStopTime === -1) {
-        return -1;
-    }
-
-    var echoTime = echoStopTime - echoStartTime;
-
-    if (echoTime < 150 || echoTime > 25000) {
-        return -1;
-    }
-
-    if (now() - methodStartTime - echoTime > 1000) {
-        return -1;
-    }
-
-    return echoTime / 58;
-};

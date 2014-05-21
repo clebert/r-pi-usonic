@@ -18,12 +18,14 @@ module.exports = function (grunt) {
                 },
                 src: [
                     '**/*.js',
+                    '!build/**/*.js',
                     '!node_modules/**/*.js'
                 ]
             },
             'lint-json': {
                 src: [
                     '**/*.json',
+                    '!build/**/*.json',
                     '!node_modules/**/*.json'
                 ]
             }
@@ -47,16 +49,38 @@ module.exports = function (grunt) {
                     publish: true
                 }
             }
+        },
+        mochacov: {
+            options: {
+                colors: true,
+                files: 'test/**/*.test.js',
+                ui: 'bdd'
+            },
+            'test-spec': {
+                options: {
+                    reporter: 'spec'
+                }
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-bumpup');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-mocha-cov');
     grunt.loadNpmTasks('grunt-module');
 
     grunt.registerTask('default', [
+        'lint',
+        'test'
+    ]);
+
+    grunt.registerTask('lint', [
         'jshint:lint-js',
         'jshint:lint-json'
+    ]);
+
+    grunt.registerTask('test', [
+        'mochacov:test-spec'
     ]);
 
     grunt.registerTask('publish', function (type) {
