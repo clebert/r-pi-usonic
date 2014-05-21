@@ -36,6 +36,8 @@ var distanceCm = ultrasonicSensor.getDistanceCm();
 sudo ./node_modules/r-pi-usonic/example/median.js
 ```
 
+![HC-SR04 ultrasonic sensor](https://raw.githubusercontent.com/clebert/r-pi-usonic/dev/img/hcsr04.png)
+
 ## Running the tests
 
 To run the test suite first install the development dependencies:
