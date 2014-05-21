@@ -53,7 +53,7 @@ module.exports = function (grunt) {
         mochacov: {
             options: {
                 colors: true,
-                files: 'test/*.test.js',
+                files: 'test/**/*.test.js',
                 ui: 'bdd'
             },
             'test-spec': {
