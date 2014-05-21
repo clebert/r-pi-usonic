@@ -5,7 +5,7 @@
 ## Installation
 
 ```sh
-npm install r-pi-usonic --save
+npm install r-pi-usonic
 ```
 
 ## Usage
@@ -28,6 +28,12 @@ var ultrasonicSensor = new UltrasonicSensor(15, 14);
 
 ```javascript
 var distanceCm = ultrasonicSensor.getDistanceCm();
+```
+
+### Example
+
+```sh
+sudo ./node_modules/r-pi-usonic/example/median.js
 ```
 
 ## Running the tests
