@@ -59,9 +59,21 @@ var rl = readline.createInterface({
 });
 
 rl.question('echoPin (default 15): ', function (echoPin) {
+    echoPin = parseInt(echoPin, 10);
+
+    if (!isFinite(echoPin)) {
+        echoPin = 15;
+    }
+
     rl.question('triggerPin (default 14): ', function (triggerPin) {
+        triggerPin = parseInt(triggerPin, 10);
+
+        if (!isFinite(triggerPin)) {
+            triggerPin = 14;
+        }
+
         rl.close();
 
-        init(echoPin || 15, triggerPin || 14);
+        init(echoPin, triggerPin);
     });
 });
