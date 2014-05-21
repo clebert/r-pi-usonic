@@ -18,13 +18,13 @@ var UltrasonicSensor = require('r-pi-usonic').UltrasonicSensor;
 
 ### API
 
-### UltrasonicSensor(echoPin: number, triggerPin: number) => void
+#### UltrasonicSensor(echoPin: number, triggerPin: number) => void
 
 ```javascript
 var ultrasonicSensor = new UltrasonicSensor(15, 14);
 ```
 
-### ultrasonicSensor.getDistanceCm() => number
+#### ultrasonicSensor.getDistanceCm() => number
 
 ```javascript
 var distanceCm = ultrasonicSensor.getDistanceCm();
