@@ -9,8 +9,8 @@ function init(echoPin, triggerPin) {
     }
 
     var count = 0;
-    var maxDistanceCm = -Infinity;
-    var minDistanceCm = Infinity;
+    var max = -Infinity;
+    var min = Infinity;
     var start = Date.now();
 
     (function main() {
@@ -25,12 +25,12 @@ function init(echoPin, triggerPin) {
 
                     var median = getMedian(a, b, c);
 
-                    if (median > maxDistanceCm) {
-                        maxDistanceCm = median;
+                    if (median > max) {
+                        max = median;
                     }
 
-                    if (median < minDistanceCm) {
-                        minDistanceCm = median;
+                    if (median < min) {
+                        min = median;
                     }
 
                     process.stdout.clearLine();
@@ -38,8 +38,8 @@ function init(echoPin, triggerPin) {
 
                     process.stdout.write(
                         'median: ' + median.toFixed(2) +
-                        ', min: ' + minDistanceCm.toFixed(2) +
-                        ', max: ' + maxDistanceCm.toFixed(2) +
+                        ', min: ' + min.toFixed(2) +
+                        ', max: ' + max.toFixed(2) +
                         ', count: ' + (count += 1) +
                         ' (' + ((Date.now() - start) / 1000).toFixed(2) + ' s)'
                     );
