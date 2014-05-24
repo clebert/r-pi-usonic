@@ -8,59 +8,43 @@ function Surveyor(echoPin, triggerPin) {
     this.ultrasonicSensor = new UltrasonicSensor(echoPin, triggerPin);
     this.min = Infinity;
     this.max = -Infinity;
-    this.correct = 0;
-    this.incorrect = 0;
     this.start = Date.now();
 }
 
 Surveyor.prototype.main = function () {
-    var self = this;
+    this.ultrasonicSensor.getMedianDistanceCm(60, false, function (distanceCm) {
+        this.setMax(distanceCm);
+        this.setMin(distanceCm);
 
-    setTimeout(function () {
-        var distanceCm = self.ultrasonicSensor.getDistanceCm();
+        this.print(distanceCm);
 
-        if (distanceCm === -1) {
-            self.incorrect += 1;
-        } else {
-            self.correct += 1;
-
-            self.setMax(distanceCm);
-            self.setMin(distanceCm);
-        }
-
-        self.print(distanceCm);
-
-        self.main();
-    }, 60);
+        this.main();
+    }.bind(this));
 };
 
 Surveyor.prototype.print = function (distanceCm) {
-    var format = 'distance: %s, min: %s, max: %s, correct: %d, incorrect: %d ' +
-        '(%s seconds)';
+    var format = 'distance: %s cm, min: %s cm, max: %s cm, time: %s s';
+
+    process.stdout.clearLine();
+    process.stdout.cursorTo(0);
 
     var min = this.min.toFixed(2);
     var max = this.max.toFixed(2);
     var time = ((Date.now() - this.start) / 1000).toFixed(2);
 
-    process.stdout.clearLine();
-    process.stdout.cursorTo(0);
-
-    var message = util.format(
-        format, distanceCm.toFixed(2), min, max, this.correct, this.incorrect,
-        time
+    process.stdout.write(
+        util.format(format, distanceCm.toFixed(2), min, max, time)
     );
-
-    process.stdout.write(message);
 };
 
 Surveyor.prototype.setMax = function (distanceCm) {
-    if (distanceCm > this.max) {
+    if (distanceCm !== -1 && distanceCm > this.max) {
         this.max = distanceCm;
     }
 };
 
 Surveyor.prototype.setMin = function (distanceCm) {
-    if (distanceCm < this.min) {
+    if (distanceCm !== -1 && distanceCm < this.min) {
         this.min = distanceCm;
     }
 };

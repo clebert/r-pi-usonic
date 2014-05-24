@@ -36,6 +36,14 @@ Returns -1 if the distance to be measured is not within 2 cm - 400 cm, or if an 
 var distanceCm = ultrasonicSensor.getDistanceCm();
 ```
 
+### ultrasonicSensor.getMedianDistanceCm(delayMs: number, skipErrors: boolean, callback: Function) => void
+
+```javascript
+ultrasonicSensor.getMedianDistanceCm(60, false, function (distanceCm) {
+    // ...
+});
+```
+
 ## Example
 
 ```sh

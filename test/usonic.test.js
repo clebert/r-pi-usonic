@@ -1,4 +1,4 @@
-/* global describe, it */
+/* global beforeEach, describe, it */
 
 'use strict';
 
@@ -94,6 +94,7 @@ describe('UltrasonicSensor()', function () {
 
         it('should call the corresponding mock funtion with pin-4 and pin-3 ' +
             'as arguments and return its return value', function () {
+
             var ultrasonicSensor = new UltrasonicSensor(4, 3);
             var returnValue = {};
 
@@ -105,6 +106,62 @@ describe('UltrasonicSensor()', function () {
             };
 
             assert.strictEqual(ultrasonicSensor.getDistanceCm(), returnValue);
+        });
+    });
+
+    describe('.getMedianDistanceCm()', function () {
+        var distancesCm;
+        var index;
+
+        beforeEach(function () {
+            distancesCm = [
+                10,
+                40,
+                -1,
+                200
+            ];
+
+            index = -1;
+        });
+
+        it('should call the corresponding mock funtion with pin-10 and ' +
+            'pin-20 as arguments and callback with 10', function (done) {
+
+            var ultrasonicSensor = new UltrasonicSensor(10, 20);
+
+            mock.getDistanceCm = function (echoPin, triggerPin) {
+                assert.strictEqual(echoPin, 10);
+                assert.strictEqual(triggerPin, 20);
+
+                return distancesCm[index += 1];
+            };
+
+            ultrasonicSensor
+                .getMedianDistanceCm(0, false, function (distanceCm) {
+                    assert.strictEqual(distanceCm, 10);
+
+                    done();
+                });
+        });
+
+        it('should call the corresponding mock funtion with pin-20 and ' +
+            'pin-10 as arguments and callback with 40', function (done) {
+
+            var ultrasonicSensor = new UltrasonicSensor(20, 10);
+
+            mock.getDistanceCm = function (echoPin, triggerPin) {
+                assert.strictEqual(echoPin, 20);
+                assert.strictEqual(triggerPin, 10);
+
+                return distancesCm[index += 1];
+            };
+
+            ultrasonicSensor
+                .getMedianDistanceCm(0, true, function (distanceCm) {
+                    assert.strictEqual(distanceCm, 40);
+
+                    done();
+                });
         });
     });
 });
