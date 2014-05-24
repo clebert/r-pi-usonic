@@ -1,4 +1,6 @@
-# r-pi-usonic [![Build Status](https://travis-ci.org/clebert/r-pi-usonic.png?branch=master)](https://travis-ci.org/clebert/r-pi-usonic) [![NPM version](https://badge.fury.io/js/r-pi-usonic.png)](https://badge.fury.io/js/r-pi-usonic)
+# r-pi-usonic
+[![Build Status](https://travis-ci.org/clebert/r-pi-usonic.png?branch=master)](https://travis-ci.org/clebert/r-pi-usonic)
+[![NPM version](https://badge.fury.io/js/r-pi-usonic.png)](https://badge.fury.io/js/r-pi-usonic)
 
 > A high performance, memory mapped, Node.js API for the HC-SR04 ultrasonic sensor connected to a Raspberry Pi.
 
@@ -16,24 +18,24 @@ npm install r-pi-usonic --save
 var UltrasonicSensor = require('r-pi-usonic').UltrasonicSensor;
 ```
 
-### API
+## API
 
-#### UltrasonicSensor(echoPin: number, triggerPin: number) => void
+### UltrasonicSensor(echoPin: number, triggerPin: number) => void
 
 ```javascript
 var ultrasonicSensor = new UltrasonicSensor(15, 14);
 ```
 
-#### ultrasonicSensor.getDistanceCm() => number
+### ultrasonicSensor.getDistanceCm() => number
 
 ```javascript
 var distanceCm = ultrasonicSensor.getDistanceCm();
 ```
 
-### Example
+## Example
 
 ```sh
-sudo node ./node_modules/r-pi-usonic/example/median.js
+sudo node node_modules/r-pi-usonic/example/median.js
 ```
 
 ![The HC-SR04 ultrasonic sensor connected to a Raspberry Pi.](https://raw.githubusercontent.com/clebert/r-pi-usonic/master/img/hcsr04.png)

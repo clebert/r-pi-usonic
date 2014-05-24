@@ -5,7 +5,7 @@ var typeutil = require('typeutil');
 var usonic;
 
 if (process.env.R_PI_USONIC_TEST !== 'true') {
-    usonic = require('./build/Release/usonic');
+    usonic = require('./build/Release/usonic.node');
 } else {
     usonic = {
         getDistanceCm: function (echoPin, triggerPin) {

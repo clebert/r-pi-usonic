@@ -9,7 +9,7 @@ namespace RPiClock {
 
     int32_t getDurationNs(const int32_t startNs, const int32_t stopNs);
 
-    int32_t getNowNs(void);
+    int32_t getNowNs();
 }
 
 #endif

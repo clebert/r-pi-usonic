@@ -42,7 +42,7 @@ namespace RPiClock {
         return durationNs;
     }
 
-    int32_t getNowNs(void) {
+    int32_t getNowNs() {
         #ifndef __MACH__
 
         struct timespec now;

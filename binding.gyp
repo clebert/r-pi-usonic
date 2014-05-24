@@ -5,10 +5,10 @@
             "sources": [
                 "src/clock.cc",
                 "src/gpio.cc",
-                "src/usonic.cc"
+                "src/node_usonic.cc"
             ],
             "include_dirs" : [
-                "<!(node -e \"require('nan')\")"
+                "node_modules/nan"
             ]
         }
     ]
