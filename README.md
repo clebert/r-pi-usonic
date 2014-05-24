@@ -30,6 +30,8 @@ var ultrasonicSensor = new UltrasonicSensor(24, 23);
 
 ### ultrasonicSensor.getDistanceCm() => number
 
+Returns -1 if the distance to be measured is not within 2 cm - 400 cm, or if an error occurred during measurement.
+
 ```javascript
 var distanceCm = ultrasonicSensor.getDistanceCm();
 ```
