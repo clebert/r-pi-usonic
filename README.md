@@ -4,7 +4,7 @@
 [![Code Climate](https://codeclimate.com/github/clebert/r-pi-usonic.png)](https://codeclimate.com/github/clebert/r-pi-usonic)
 [![NPM version](https://badge.fury.io/js/r-pi-usonic.png)](https://badge.fury.io/js/r-pi-usonic)
 
-> A high performance, memory mapped, Node.js API for the HC-SR04 ultrasonic sensor connected to a Raspberry Pi.
+> A high performance, memory mapped, Node.js API for the [HC-SR04 ultrasonic sensor](http://www.micropik.com/PDF/HCSR04.pdf) connected to a Raspberry Pi.
 
 ## Installation
 
