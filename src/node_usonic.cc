@@ -61,6 +61,10 @@ namespace {
 
         const double distanceCm = (double) RPiClock::getDurationNs(signalStartNs, signalStopNs) / 58000.0;
 
+        if (distanceCm < 2.0 || distanceCm > 400.0) {
+            NanReturnValue(NanNew<v8::Number>(-1));
+        }
+
         NanReturnValue(NanNew<v8::Number>(distanceCm));
     }
 
