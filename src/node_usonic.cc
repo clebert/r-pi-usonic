@@ -26,29 +26,41 @@ namespace {
 
         RPiGpio::setLevel(memory, triggerPin, false);
 
-        int32_t startNs;
+        const int32_t loopStartNs = RPiClock::getNowNs();
+
+        if (loopStartNs == -1) {
+            NanThrowError(node::ErrnoException(errno));
+            NanReturnUndefined();
+        }
+
+        int32_t signalStartNs;
 
         do {
-            startNs = RPiClock::getNowNs();
+            signalStartNs = RPiClock::getNowNs();
 
-            if (startNs == -1) {
+            if (signalStartNs == -1) {
                 NanThrowError(node::ErrnoException(errno));
+                NanReturnUndefined();
+            }
+
+            if (RPiClock::getDurationNs(loopStartNs, signalStartNs) > 60000000) {
+                NanThrowError("No high-level signal detected.");
                 NanReturnUndefined();
             }
         } while(RPiGpio::getLevel(memory, echoPin) == false);
 
-        int32_t stopNs;
+        int32_t signalStopNs;
 
         do {
-            stopNs = RPiClock::getNowNs();
+            signalStopNs = RPiClock::getNowNs();
 
-            if (stopNs == -1) {
+            if (signalStopNs == -1) {
                 NanThrowError(node::ErrnoException(errno));
                 NanReturnUndefined();
             }
         } while(RPiGpio::getLevel(memory, echoPin) == true);
 
-        const double distanceCm = (double) RPiClock::getDurationNs(startNs, stopNs) / 58000.0;
+        const double distanceCm = (double) RPiClock::getDurationNs(signalStartNs, signalStopNs) / 58000.0;
 
         NanReturnValue(NanNew<v8::Number>(distanceCm));
     }
