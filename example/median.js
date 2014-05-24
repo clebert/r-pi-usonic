@@ -45,7 +45,7 @@ Median.prototype.print = function (median) {
     var format = 'median: %s, min: %s, max: %s, count: %d (%s seconds)';
     var min = this.min.toFixed(2);
     var max = this.max.toFixed(2);
-    var count = this.count;
+    var count = this.count += 1;
     var time = ((Date.now() - this.start) / 1000).toFixed(2);
 
     process.stdout.clearLine();
