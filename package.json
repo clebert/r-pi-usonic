@@ -50,7 +50,7 @@
     },
     "dependencies": {
         "nan": "~1.0.0",
-        "r-pi-gpio": "~1.0.0",
+        "r-pi-gpio": "~1.0.1",
         "typeutil": "~3.1.4"
     },
     "devDependencies": {
