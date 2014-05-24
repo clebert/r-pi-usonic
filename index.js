@@ -1,18 +1,7 @@
 'use strict';
 
 var typeutil = require('typeutil');
-
-var usonic;
-
-if (process.env.R_PI_USONIC_TEST !== 'true') {
-    usonic = require('./build/Release/usonic.node');
-} else {
-    usonic = {
-        getDistanceCm: function (echoPin, triggerPin) {
-            return echoPin - triggerPin;
-        }
-    };
-}
+var usonic = require('./build/Release/usonic.node');
 
 function isValidPin(pin) {
     return typeutil.isInteger(pin) && pin >= 0 && pin <= 53;
@@ -31,9 +20,9 @@ var UltrasonicSensor = typeutil.typify(function (echoPin, triggerPin) {
         throw new Error('Invalid trigger pin.');
     }
 
-    this.getDistanceCm = typeutil.typify(function () {
+    this.getDistanceCm = function () {
         return usonic.getDistanceCm(echoPin, triggerPin);
-    }, '() => number');
+    };
 }, '(number, number) => void');
 
-exports.UltrasonicSensor = UltrasonicSensor;
+module.exports = UltrasonicSensor;
