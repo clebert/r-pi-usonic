@@ -2,13 +2,7 @@
 
 module.exports = function (grunt) {
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
         bumpup: {
-            options: {
-                updateProps: {
-                    pkg: 'package.json'
-                }
-            },
             file: 'package.json'
         },
         jshint: {
@@ -60,8 +54,28 @@ module.exports = function (grunt) {
                 options: {
                     reporter: 'spec'
                 }
+            },
+            'test-html-cov': {
+                options: {
+                    output: 'test/coverage.html',
+                    quiet: true,
+                    reporter: 'html-cov'
+                }
+            },
+            'test-console-cov': {
+                options: {
+                    coverage: true,
+                    reporter: 'mocha-cov-reporter'
+                }
+            },
+            'travis-coveralls': {
+                options: {
+                    coveralls: {
+                        serviceName: 'travis-ci'
+                    }
+                }
             }
-        }
+        },
     });
 
     grunt.loadNpmTasks('grunt-bumpup');
@@ -80,7 +94,9 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('test', [
-        'mochacov:test-spec'
+        'mochacov:test-spec',
+        'mochacov:test-html-cov',
+        'mochacov:test-console-cov'
     ]);
 
     grunt.registerTask('publish', function (type) {
@@ -90,4 +106,9 @@ module.exports = function (grunt) {
         grunt.task.run('module:license-copyright');
         grunt.task.run('module:release-publish');
     });
+
+    grunt.registerTask('travis', [
+        'default',
+        'mochacov:travis-coveralls'
+    ]);
 };

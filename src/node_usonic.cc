@@ -17,14 +17,14 @@ namespace {
         RPiGpio::setDirection(memory, echoPin, RPiGpio::INPUT);
         RPiGpio::setDirection(memory, triggerPin, RPiGpio::OUTPUT);
 
-        RPiGpio::setLevel(memory, triggerPin, RPiGpio::HIGH);
+        RPiGpio::setLevel(memory, triggerPin, true);
 
         if (RPiClock::setDelayNs(10000) == -1) {
             NanThrowError(node::ErrnoException(errno));
             NanReturnUndefined();
         }
 
-        RPiGpio::setLevel(memory, triggerPin, RPiGpio::LOW);
+        RPiGpio::setLevel(memory, triggerPin, false);
 
         int32_t startNs;
 
@@ -35,7 +35,7 @@ namespace {
                 NanThrowError(node::ErrnoException(errno));
                 NanReturnUndefined();
             }
-        } while(RPiGpio::getLevel(memory, echoPin) == RPiGpio::LOW);
+        } while(RPiGpio::getLevel(memory, echoPin) == false);
 
         int32_t stopNs;
 
@@ -46,7 +46,7 @@ namespace {
                 NanThrowError(node::ErrnoException(errno));
                 NanReturnUndefined();
             }
-        } while(RPiGpio::getLevel(memory, echoPin) == RPiGpio::HIGH);
+        } while(RPiGpio::getLevel(memory, echoPin) == true);
 
         const double distanceCm = (double) RPiClock::getDurationNs(startNs, stopNs) / 58000.0;
 
