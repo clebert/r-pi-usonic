@@ -44,8 +44,9 @@ namespace {
             }
 
             if (RPiClock::getDurationNs(loopStartNs, signalStartNs) > 60000000) {
-                NanThrowError("No high-level signal detected.");
-                NanReturnUndefined();
+                //NanThrowError("No high-level GPIO signal detected.");
+                //NanReturnUndefined();
+                NanReturnValue(NanNew<v8::Number>(-1));
             }
         } while(RPiGpio::getLevel(memory, echoPin) == false);
 
