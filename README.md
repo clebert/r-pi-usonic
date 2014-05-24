@@ -37,7 +37,7 @@ var distanceCm = ultrasonicSensor.getDistanceCm();
 ## Example
 
 ```sh
-sudo node node_modules/r-pi-usonic/example/median.js
+sudo node node_modules/r-pi-usonic/example/surveyor.js
 ```
 
 ![The HC-SR04 ultrasonic sensor connected to a Raspberry Pi.](https://raw.githubusercontent.com/clebert/r-pi-usonic/master/img/hcsr04.png)
