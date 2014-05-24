@@ -11,14 +11,14 @@ function Surveyor(echoPin, triggerPin) {
     this.start = Date.now();
 }
 
-Surveyor.prototype.main = function () {
+Surveyor.prototype.measure = function () {
     this.ultrasonicSensor.getMedianDistanceCm(60, false, function (distanceCm) {
-        this.setMax(distanceCm);
         this.setMin(distanceCm);
+        this.setMax(distanceCm);
 
         this.print(distanceCm);
 
-        this.main();
+        this.measure();
     }.bind(this));
 };
 
@@ -72,6 +72,6 @@ rl.question('echoPin (default 24): ', function (string) {
 
         rl.close();
 
-        new Surveyor(echoPin, triggerPin).main();
+        new Surveyor(echoPin, triggerPin).measure();
     });
 });
