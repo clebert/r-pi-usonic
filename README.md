@@ -4,7 +4,7 @@
 [![Code Climate](https://codeclimate.com/github/clebert/r-pi-usonic.png)](https://codeclimate.com/github/clebert/r-pi-usonic)
 [![NPM version](https://badge.fury.io/js/r-pi-usonic.png)](https://badge.fury.io/js/r-pi-usonic)
 
-> A high performance, memory mapped, Node.js API for the [HC-SR04 ultrasonic sensor](http://www.micropik.com/PDF/HCSR04.pdf) connected to a Raspberry Pi.
+> A high performance, memory mapped, Node.js API for the HC-SR04 ultrasonic sensor connected to a Raspberry Pi.
 
 ## Installation
 
@@ -87,6 +87,11 @@ sudo node node_modules/r-pi-usonic/example/surveyor.js
 | GPIO 9  (SP10 MISO) | 21  | 22  | GPIO 25             |
 | GPIO 11 (SP10 SCLK) | 23  | 24  | GPIO 8 (SP10 CE0 N) |
 | GROUND              | 25  | 26  | GPIO 7 (SP10 CE1 N) |
+
+## Links
+
+- http://www.micropik.com/PDF/HCSR04.pdf
+- http://www.mikrocontroller.net/attachment/218122/HC-SR04_ultraschallmodul_beschreibung_3.pdf
 
 ## Running the tests
 
