@@ -39,7 +39,7 @@ var distanceCm = ultrasonicSensor.getDistanceCm();
 ### ultrasonicSensor.getMedianDistanceCm(delayMs: number, skipErrors: boolean, callback: Function) => void
 
 ```javascript
-ultrasonicSensor.getMedianDistanceCm(60, false, function (distanceCm) {
+ultrasonicSensor.getMedianDistanceCm(20, false, function (distanceCm) {
     // ...
 });
 ```

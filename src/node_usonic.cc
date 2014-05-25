@@ -43,7 +43,7 @@ namespace {
                 NanReturnUndefined();
             }
 
-            if (RPiClock::getDurationNs(loopStartNs, signalStartNs) > 25000000) {
+            if (RPiClock::getDurationNs(loopStartNs, signalStartNs) > 450000) {
                 NanReturnValue(NanNew<v8::Number>(-1));
             }
         } while(RPiGpio::getLevel(memory, echoPin) == false);

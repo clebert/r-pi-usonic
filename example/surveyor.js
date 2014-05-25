@@ -12,7 +12,7 @@ function Surveyor(echoPin, triggerPin) {
 }
 
 Surveyor.prototype.measure = function () {
-    this.ultrasonicSensor.getMedianDistanceCm(60, false, function (distanceCm) {
+    this.ultrasonicSensor.getMedianDistanceCm(20, false, function (distanceCm) {
         this.setMin(distanceCm);
         this.setMax(distanceCm);
 
