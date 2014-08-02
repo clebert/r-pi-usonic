@@ -1,47 +1,47 @@
 # r-pi-usonic
-[![Build Status](https://travis-ci.org/clebert/r-pi-usonic.png?branch=master)](https://travis-ci.org/clebert/r-pi-usonic)
-[![Coverage Status](https://coveralls.io/repos/clebert/r-pi-usonic/badge.png)](https://coveralls.io/r/clebert/r-pi-usonic)
-[![Code Climate](https://codeclimate.com/github/clebert/r-pi-usonic.png)](https://codeclimate.com/github/clebert/r-pi-usonic)
-[![NPM version](https://badge.fury.io/js/r-pi-usonic.png)](https://badge.fury.io/js/r-pi-usonic)
 
 > A high performance, memory mapped, Node.js API for the HC-SR04 ultrasonic sensor connected to a Raspberry Pi.
 
-## Installation
+[![license](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://raw.githubusercontent.com/clebert/r-pi-usonic/master/LICENSE)
+[![npm](http://img.shields.io/npm/v/r-pi-usonic.svg?style=flat)](https://www.npmjs.org/package/r-pi-usonic)
+[![downloads](http://img.shields.io/npm/dm/r-pi-usonic.svg?style=flat)](https://www.npmjs.org/package/r-pi-usonic)
+
+[![build](http://img.shields.io/travis/clebert/r-pi-usonic/master.svg?style=flat)](https://travis-ci.org/clebert/r-pi-usonic)
+[![coverage](http://img.shields.io/coveralls/clebert/r-pi-usonic/master.svg?style=flat)](https://coveralls.io/r/clebert/r-pi-usonic)
+[![code climate](http://img.shields.io/codeclimate/github/clebert/r-pi-usonic.svg?style=flat)](https://codeclimate.com/github/clebert/r-pi-usonic)
+[![dependencies](http://img.shields.io/david/clebert/r-pi-usonic.svg?style=flat)](https://david-dm.org/clebert/r-pi-usonic#info=dependencies&view=table)
+[![devDependencies](http://img.shields.io/david/dev/clebert/r-pi-usonic.svg?style=flat)](https://david-dm.org/clebert/r-pi-usonic#info=devDependencies&view=table)
+
+## Getting Started
+
+### Installation
 
 ```sh
 npm install r-pi-usonic --save
 ```
 
-## Usage
-
-### Node.js
+### Integration
 
 ```javascript
-var UltrasonicSensor = require('r-pi-usonic');
+var usonic = require('r-pi-usonic');
 ```
 
 ## API
 
-### UltrasonicSensor(echoPin: number, triggerPin: number) => void
+### usonic.sensor(echoPin, triggerPin)
+
+Creates a new ultrasonic sensor function and returns it.
 
 ```javascript
-var ultrasonicSensor = new UltrasonicSensor(24, 23);
+var sensor = usonic.sensor(24, 23);
 ```
 
-### ultrasonicSensor.getDistanceCm() => number
+### sensor()
 
-Returns -1 if the distance to be measured is not within 2 cm - 400 cm, or if an error occurred during measurement.
-
-```javascript
-var distanceCm = ultrasonicSensor.getDistanceCm();
-```
-
-### ultrasonicSensor.getMedianDistanceCm(delayMs: number, skipErrors: boolean, callback: Function) => void
+Returns the distance in cm if the target is within 2 to 400 cm, and false otherwise.
 
 ```javascript
-ultrasonicSensor.getMedianDistanceCm(20, false, function (distanceCm) {
-    // ...
-});
+var distance = sensor();
 ```
 
 ## Example
@@ -50,7 +50,7 @@ ultrasonicSensor.getMedianDistanceCm(20, false, function (distanceCm) {
 sudo node node_modules/r-pi-usonic/example/surveyor.js
 ```
 
-![The HC-SR04 ultrasonic sensor connected to a Raspberry Pi.](https://raw.githubusercontent.com/clebert/r-pi-usonic/master/img/hcsr04.png)
+![Image: hcsr04.png](https://raw.githubusercontent.com/clebert/r-pi-usonic/master/img/hcsr04.png)
 
 ## Raspberry Pi GPIO Pin Layout (Revision 1)
 
@@ -93,7 +93,7 @@ sudo node node_modules/r-pi-usonic/example/surveyor.js
 - http://www.micropik.com/PDF/HCSR04.pdf
 - http://www.mikrocontroller.net/attachment/218122/HC-SR04_ultraschallmodul_beschreibung_3.pdf
 
-## Running the tests
+## Running Tests
 
 To run the test suite first install the development dependencies:
 
@@ -106,7 +106,3 @@ then run the tests:
 ```sh
 npm test
 ```
-
-## License
-
-Licensed under the MIT license.
