@@ -38,7 +38,7 @@ var sensor = usonic.sensor(24, 23);
 
 ### sensor()
 
-Returns the distance in cm if the target is within 2 to 400 cm, and false otherwise.
+Returns the distance in cm if the target is within 2 to 400 cm, and -1 otherwise.
 
 ```javascript
 var distance = sensor();

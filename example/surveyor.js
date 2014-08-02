@@ -11,11 +11,7 @@ var rl = readline.createInterface({
 var parsePin = function (response, defaultPin) {
     var pin = parseInt(response, 10);
 
-    if (isNaN(pin)) {
-        return defaultPin;
-    }
-
-    return pin;
+    return isNaN(pin) ? defaultPin : pin;
 };
 
 var defaultEchoPin = 24;
