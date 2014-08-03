@@ -11,9 +11,9 @@ namespace {
     static NAN_METHOD(getDistance) {
         NanScope();
 
-        const uint32_t echoPin = args[0]->ToInteger()->Value();
-        const uint32_t triggerPin = args[1]->ToInteger()->Value();
-        const uint32_t timeoutNs = args[2]->ToInteger()->Value() * 1000;
+        const int32_t echoPin = args[0]->ToInteger()->Value();
+        const int32_t triggerPin = args[1]->ToInteger()->Value();
+        const int32_t timeoutNs = args[2]->ToInteger()->Value() * 1000;
 
         RPiGpio::setDirection(memory, echoPin, RPiGpio::INPUT);
         RPiGpio::setDirection(memory, triggerPin, RPiGpio::OUTPUT);
