@@ -8,11 +8,12 @@ namespace {
 
     volatile uint32_t *memory;
 
-    static NAN_METHOD(getDistanceCm) {
+    static NAN_METHOD(getDistance) {
         NanScope();
 
         const uint32_t echoPin = args[0]->ToInteger()->Value();
         const uint32_t triggerPin = args[1]->ToInteger()->Value();
+        const uint32_t timeoutNs = args[2]->ToInteger()->Value() * 1000;
 
         RPiGpio::setDirection(memory, echoPin, RPiGpio::INPUT);
         RPiGpio::setDirection(memory, triggerPin, RPiGpio::OUTPUT);
@@ -43,7 +44,7 @@ namespace {
                 NanReturnUndefined();
             }
 
-            if (RPiClock::getDurationNs(loopStartNs, signalStartNs) > 450000) {
+            if (RPiClock::getDurationNs(loopStartNs, signalStartNs) > timeoutNs) {
                 NanReturnValue(NanNew<v8::Number>(-1));
             }
         } while(RPiGpio::getLevel(memory, echoPin) == false);
@@ -59,13 +60,9 @@ namespace {
             }
         } while(RPiGpio::getLevel(memory, echoPin) == true);
 
-        const double distanceCm = (double) RPiClock::getDurationNs(signalStartNs, signalStopNs) / 58000.0;
+        const double distance = (double) RPiClock::getDurationNs(signalStartNs, signalStopNs) / 58000.0;
 
-        if (distanceCm < 2.0 || distanceCm > 400.0) {
-            NanReturnValue(NanNew<v8::Number>(-1));
-        }
-
-        NanReturnValue(NanNew<v8::Number>(distanceCm));
+        NanReturnValue(NanNew<v8::Number>(distance));
     }
 
     void init(v8::Handle<v8::Object> exports) {
@@ -77,7 +74,7 @@ namespace {
             return;
         }
 
-        NODE_SET_METHOD(exports, "getDistanceCm", getDistanceCm);
+        NODE_SET_METHOD(exports, "getDistance", getDistance);
     }
 
     NODE_MODULE(usonic, init);

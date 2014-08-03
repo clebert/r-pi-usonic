@@ -28,17 +28,18 @@ var usonic = require('r-pi-usonic');
 
 ## API
 
-### usonic.sensor(echoPin, triggerPin)
+### usonic.sensor(echoPin, triggerPin, [timeout])
 
 Creates a new ultrasonic sensor function and returns it.
+The measurement timeout has a default value of 450µs.
 
 ```javascript
-var sensor = usonic.sensor(24, 23);
+var sensor = usonic.sensor(24, 23, 500);
 ```
 
 ### sensor()
 
-Returns the distance in cm if the target is within 2 to 400 cm, and -1 otherwise.
+Returns the distance in cm if no measurement timeout occurs, and -1 otherwise.
 
 ```javascript
 var distance = sensor();
