@@ -28,9 +28,11 @@ rl.question('echoPin (default ' + defaultEchoPin + '): ', function (response) {
 
         var measure = function () {
             setTimeout(function () {
+                var distance = sensor().toFixed(2);
+
                 process.stdout.clearLine();
                 process.stdout.cursorTo(0);
-                process.stdout.write('distance: ' + sensor().toFixed(2) + ' cm');
+                process.stdout.write('distance: ' + distance + ' cm');
 
                 measure();
             }, 20);
