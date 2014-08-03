@@ -26,7 +26,7 @@ rl.question('echoPin (default ' + defaultEchoPin + '): ', function (response) {
         var triggerPin = parsePin(response, defaultTriggerPin);
         var sensor = usonic.sensor(echoPin, triggerPin);
 
-        var measure = function () {
+        (function measure() {
             setTimeout(function () {
                 var distance = sensor().toFixed(2);
 
@@ -36,8 +36,6 @@ rl.question('echoPin (default ' + defaultEchoPin + '): ', function (response) {
 
                 measure();
             }, 20);
-        };
-
-        measure();
+        }());
     });
 });
