@@ -3,9 +3,9 @@
 'use strict';
 
 var assert = require('extended-assert');
-var fs = require('fs');
-var pkg = require('../package');
-var path = require('path');
+var fs     = require('fs');
+var pkg    = require('../package');
+var path   = require('path');
 
 describe('package.json', function () {
     it('defines an existing primary entry point', function () {

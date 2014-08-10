@@ -31,10 +31,10 @@ var usonic = require('r-pi-usonic');
 ### usonic.sensor(echoPin, triggerPin, [timeout])
 
 Creates a new ultrasonic sensor function and returns it.
-The measurement timeout has a default value of 450µs.
+The measurement timeout has a default value of 750µs.
 
 ```javascript
-var sensor = usonic.sensor(24, 23, 500);
+var sensor = usonic.sensor(24, 23, 450);
 ```
 
 ### sensor()

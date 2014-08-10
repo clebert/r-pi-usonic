@@ -3,7 +3,7 @@
 'use strict';
 
 var assert = require('extended-assert');
-var mock = assert.requireFileMock(__dirname, '../build/Release/usonic.node', {});
+var mock   = assert.requireFileMock(__dirname, '../build/Release/usonic.node', {});
 var usonic = require('../lib/usonic');
 
 describe('usonic', function () {
@@ -12,74 +12,6 @@ describe('usonic', function () {
     });
 
     describe('.sensor()', function () {
-        it('throws an illegal argument error: echoPin', function () {
-            var message = 'Illegal argument: echoPin';
-
-            assert.throwsError(function () {
-                usonic.sensor();
-            }, 'Error', message);
-
-            assert.throwsError(function () {
-                usonic.sensor(NaN);
-            }, 'Error', message);
-
-            assert.throwsError(function () {
-                usonic.sensor(1.5);
-            }, 'Error', message);
-
-            assert.throwsError(function () {
-                usonic.sensor(-1);
-            }, 'Error', message);
-
-            assert.throwsError(function () {
-                usonic.sensor(54);
-            }, 'Error', message);
-        });
-
-        it('throws an illegal argument error: triggerPin', function () {
-            var message = 'Illegal argument: triggerPin';
-
-            assert.throwsError(function () {
-                usonic.sensor(0);
-            }, 'Error', message);
-
-            assert.throwsError(function () {
-                usonic.sensor(0, NaN);
-            }, 'Error', message);
-
-            assert.throwsError(function () {
-                usonic.sensor(0, 1.5);
-            }, 'Error', message);
-
-            assert.throwsError(function () {
-                usonic.sensor(0, -1);
-            }, 'Error', message);
-
-            assert.throwsError(function () {
-                usonic.sensor(0, 54);
-            }, 'Error', message);
-        });
-
-        it('throws an illegal argument error: [timeout]', function () {
-            var message = 'Illegal argument: [timeout]';
-
-            assert.throwsError(function () {
-                usonic.sensor(0, 0, NaN);
-            }, 'Error', message);
-
-            assert.throwsError(function () {
-                usonic.sensor(0, 0, 1.5);
-            }, 'Error', message);
-
-            assert.throwsError(function () {
-                usonic.sensor(0, 0, 0);
-            }, 'Error', message);
-
-            assert.throwsError(function () {
-                usonic.sensor(0, 0, 2147483648);
-            }, 'Error', message);
-        });
-
         it('returns a function', function () {
             assert.strictEqual(typeof usonic.sensor(0, 0), 'function');
             assert.strictEqual(typeof usonic.sensor(0, 0, 1), 'function');
@@ -97,6 +29,64 @@ describe('usonic', function () {
             assert.strictEqual(typeof usonic.sensor(53, 53, 1), 'function');
             assert.strictEqual(typeof usonic.sensor(53, 53, 2147483647), 'function');
         });
+
+        it('throws a type error', function () {
+            assert.throwsError(function () {
+                usonic.sensor();
+            }, 'TypeError', 'Illegal argument: undefined');
+
+            assert.throwsError(function () {
+                usonic.sensor(NaN);
+            }, 'TypeError', 'Illegal argument: null');
+
+            assert.throwsError(function () {
+                usonic.sensor(1.5);
+            }, 'TypeError', 'Illegal argument: 1.5');
+
+            assert.throwsError(function () {
+                usonic.sensor(-1);
+            }, 'TypeError', 'Illegal argument: -1');
+
+            assert.throwsError(function () {
+                usonic.sensor(54);
+            }, 'TypeError', 'Illegal argument: 54');
+
+            assert.throwsError(function () {
+                usonic.sensor(0);
+            }, 'TypeError', 'Illegal argument: undefined');
+
+            assert.throwsError(function () {
+                usonic.sensor(0, NaN);
+            }, 'TypeError', 'Illegal argument: null');
+
+            assert.throwsError(function () {
+                usonic.sensor(0, 1.5);
+            }, 'TypeError', 'Illegal argument: 1.5');
+
+            assert.throwsError(function () {
+                usonic.sensor(0, -1);
+            }, 'TypeError', 'Illegal argument: -1');
+
+            assert.throwsError(function () {
+                usonic.sensor(0, 54);
+            }, 'TypeError', 'Illegal argument: 54');
+
+            assert.throwsError(function () {
+                usonic.sensor(0, 0, NaN);
+            }, 'TypeError', 'Illegal argument: null');
+
+            assert.throwsError(function () {
+                usonic.sensor(0, 0, 1.5);
+            }, 'TypeError', 'Illegal argument: 1.5');
+
+            assert.throwsError(function () {
+                usonic.sensor(0, 0, 0);
+            }, 'TypeError', 'Illegal argument: 0');
+
+            assert.throwsError(function () {
+                usonic.sensor(0, 0, 2147483648);
+            }, 'TypeError', 'Illegal argument: 2147483648');
+        });
     });
 
     describe('sensor()', function () {
@@ -106,7 +96,7 @@ describe('usonic', function () {
             mock.getDistance = function (echoPin, triggerPin, timeout) {
                 assert.strictEqual(echoPin, 0);
                 assert.strictEqual(triggerPin, 53);
-                assert.strictEqual(timeout, 450);
+                assert.strictEqual(timeout, 750);
 
                 called += 1;
             };
@@ -122,12 +112,12 @@ describe('usonic', function () {
             mock.getDistance = function (echoPin, triggerPin, timeout) {
                 assert.strictEqual(echoPin, 0);
                 assert.strictEqual(triggerPin, 53);
-                assert.strictEqual(timeout, 500);
+                assert.strictEqual(timeout, 450);
 
                 called += 1;
             };
 
-            usonic.sensor(0, 53, 500)();
+            usonic.sensor(0, 53, 450)();
 
             assert.strictEqual(called, 1);
         });

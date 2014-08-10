@@ -1,7 +1,45 @@
 'use strict';
 
-var readline = require('readline');
-var usonic = require('../lib/usonic');
+var readline   = require('readline');
+var statistics = require('math-statistics');
+var usonic     = require('../lib/usonic');
+
+var print = function (distances) {
+    var distance = statistics.median(distances);
+
+    process.stdout.clearLine();
+    process.stdout.cursorTo(0);
+
+    if (distance < 0) {
+        process.stdout.write('Error: Measurement timeout.\n');
+    } else {
+        process.stdout.write('Distance: ' + distance.toFixed(2) + ' cm');
+    }
+};
+
+var init = function (config) {
+    var sensor = usonic.sensor(config.echoPin, config.triggerPin, config.timeout);
+
+    console.log(config);
+
+    var distances;
+
+    (function measure() {
+        if (!distances || distances.length === config.rate) {
+            if (distances) {
+                print(distances);
+            }
+
+            distances = [];
+        }
+
+        setTimeout(function () {
+            distances.push(sensor());
+
+            measure();
+        }, config.delay);
+    }());
+};
 
 var rl = readline.createInterface({
     input: process.stdin,
@@ -18,31 +56,19 @@ var getInteger = function (name, defaultValue, callback) {
 
 getInteger('Echo pin', 24, function (echoPin) {
     getInteger('Trigger pin', 23, function (triggerPin) {
-        getInteger('Measurement timeout in µs', 450, function (timeout) {
+        getInteger('Measurement timeout in µs', 750, function (timeout) {
             getInteger('Measurement delay in ms', 60, function (delay) {
-                rl.close();
+                getInteger('Measurements per sample', 5, function (rate) {
+                    rl.close();
 
-                var cycles = 0;
-                var sensor = usonic.sensor(echoPin, triggerPin, timeout);
-
-                (function measure() {
-                    setTimeout(function () {
-                        cycles += 1;
-
-                        var distance = sensor();
-
-                        process.stdout.clearLine();
-                        process.stdout.cursorTo(0);
-
-                        if (distance < 0) {
-                            process.stdout.write('[' + cycles + '] Error: Measurement timeout.\n');
-                        } else {
-                            process.stdout.write('[' + cycles + '] Distance: ' + distance.toFixed(2) + ' cm');
-                        }
-
-                        measure();
-                    }, delay);
-                }());
+                    init({
+                        echoPin: echoPin,
+                        triggerPin: triggerPin,
+                        timeout: timeout,
+                        delay: delay,
+                        rate: rate
+                    });
+                });
             });
         });
     });
