@@ -5,10 +5,15 @@ module.exports = function (grunt) {
         bumpup: {
             file: 'package.json'
         },
-        eslint: {
+        jshint: {
+            options: {
+                jshintrc: '.jshintrc'
+            },
             src: [
                 '**/*.js',
-                '!node_modules/**/*.js'
+                '**/*.json',
+                '!node_modules/**/*.js',
+                '!node_modules/**/*.json'
             ]
         },
         mochacov: {
@@ -65,17 +70,15 @@ module.exports = function (grunt) {
         }
     });
 
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-bumpup');
-    grunt.loadNpmTasks('grunt-eslint');
     grunt.loadNpmTasks('grunt-mocha-cov');
     grunt.loadNpmTasks('grunt-module');
 
     grunt.registerTask('default', [
-        'lint',
+        'jshint',
         'test'
     ]);
-
-    grunt.registerTask('lint', 'eslint');
 
     grunt.registerTask('test', [
         'mochacov:test-spec',

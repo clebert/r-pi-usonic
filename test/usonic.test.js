@@ -82,10 +82,6 @@ describe('usonic', function () {
             assert.throwsError(function () {
                 usonic.sensor(0, 0, 0);
             }, 'TypeError', 'Illegal argument: 0');
-
-            assert.throwsError(function () {
-                usonic.sensor(0, 0, 2147483648);
-            }, 'TypeError', 'Illegal argument: 2147483648');
         });
     });
 
