@@ -47,6 +47,8 @@ var distance = sensor();
 
 ## Example
 
+This example needs access to the physical memory, so it must run as root.
+
 ```sh
 sudo node node_modules/r-pi-usonic/example/surveyor.js
 ```
