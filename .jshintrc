@@ -17,7 +17,7 @@
     "nonbsp":        true,     // This option warns about "non-breaking whitespace" characters.
     "nonew":         true,     // This option prohibits the use of constructor functions for side-effects.
     "plusplus":      true,     // This option prohibits the use of unary increment and decrement operators.
-    "quotmark":      true,     // This option enforces the consistency of quotation marks used throughout your code.
+    "quotmark":      false,    // This option enforces the consistency of quotation marks used throughout your code.
     "undef":         true,     // This option prohibits the use of explicitly undeclared variables.
     "unused":        true,     // This option warns when you define and never use your variables.
     "strict":        true,     // This option requires all functions to run in ECMAScript 5's strict mode.
