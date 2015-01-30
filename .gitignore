@@ -1,4 +1,5 @@
 *.sublime-workspace
+*.sublime-project
 
 build/
 node_modules/
@@ -9,3 +10,4 @@ npm-debug.log
 
 TODO
 test/coverage.html
+test/lcov.info

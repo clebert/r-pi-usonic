@@ -1,4 +1,5 @@
 {
+    "esnext": true,
     "requireCurlyBraces": true,
     "requireSpaceAfterKeywords": true,
     "requireSpaceBeforeBlockStatements": true,
@@ -14,6 +15,12 @@
     "disallowSpacesInNamedFunctionExpression": {
         "beforeOpeningRoundBrace": true
     },
+    "requireSpacesInFunctionDeclaration": {
+        "beforeOpeningCurlyBrace": true
+    },
+    "disallowSpacesInFunctionDeclaration": {
+        "beforeOpeningRoundBrace": true
+    },
     "disallowSpacesInCallExpression": true,
     "disallowMultipleVarDecl": true,
     "requireBlocksOnNewline": true,
@@ -22,7 +29,6 @@
     "disallowEmptyBlocks": true,
     "disallowSpacesInsideParentheses": true,
     "requireSpacesInsideObjectBrackets": "all",
-    "requireSpacesInsideArrayBrackets": "all",
     "disallowQuotedKeysInObjects": true,
     "disallowSpaceAfterObjectKeys": true,
     "requireSpaceBeforeObjectValues": true,
@@ -39,6 +45,9 @@
     "disallowMultipleLineStrings": true,
     "disallowMultipleLineBreaks": true,
     "disallowMixedSpacesAndTabs": true,
+    "disallowOperatorBeforeLineBreak": [
+        "."
+    ],
     "disallowTrailingWhitespace": true,
     "disallowTrailingComma": true,
     "disallowKeywordsOnNewLine": [
@@ -49,7 +58,6 @@
     "requireDotNotation": true,
     "disallowYodaConditions": true,
     "requireSpaceAfterLineComment": true,
-    "disallowFunctionDeclarations": true,
     "disallowNewlineBeforeBlockStatements": true,
     "validateLineBreaks": "LF",
     "validateQuoteMarks": {

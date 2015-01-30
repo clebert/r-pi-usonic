@@ -17,10 +17,10 @@ var print = function (distances) {
     }
 };
 
-var init = function (config) {
-    var sensor = usonic.sensor(config.echoPin, config.triggerPin, config.timeout);
+var initSensor = function (config) {
+    var sensor = usonic.createSensor(config.echoPin, config.triggerPin, config.timeout);
 
-    console.log(config);
+    console.log('Config: ' + JSON.stringify(config));
 
     var distances;
 
@@ -46,7 +46,7 @@ var rl = readline.createInterface({
     output: process.stdout
 });
 
-var getInteger = function (name, defaultValue, callback) {
+var askForInteger = function (name, defaultValue, callback) {
     rl.question(name + ' (default ' + defaultValue + '): ', function (response) {
         var value = parseInt(response, 10);
 
@@ -54,14 +54,14 @@ var getInteger = function (name, defaultValue, callback) {
     });
 };
 
-getInteger('Echo pin', 24, function (echoPin) {
-    getInteger('Trigger pin', 23, function (triggerPin) {
-        getInteger('Measurement timeout in µs', 750, function (timeout) {
-            getInteger('Measurement delay in ms', 60, function (delay) {
-                getInteger('Measurements per sample', 5, function (rate) {
+askForInteger('Echo pin', 24, function (echoPin) {
+    askForInteger('Trigger pin', 23, function (triggerPin) {
+        askForInteger('Measurement timeout in µs', 750, function (timeout) {
+            askForInteger('Measurement delay in ms', 60, function (delay) {
+                askForInteger('Measurements per sample', 5, function (rate) {
                     rl.close();
 
-                    init({
+                    initSensor({
                         echoPin: echoPin,
                         triggerPin: triggerPin,
                         timeout: timeout,

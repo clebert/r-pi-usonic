@@ -32,8 +32,8 @@
     "asi":          false, // This option suppresses warnings about missing semicolons.
     "boss":         false, // This option suppresses warnings about the use of assignments in cases where comparisons are expected.
     "debug":        false, // This option suppresses warnings about the debugger statements in your code.
-    "eqnull":       false, // This option suppresses warnings about == null comparisons.
-    "esnext":       false, // This option tells JSHint that your code uses ECMAScript 6 specific syntax.
+    "eqnull":       true,  // This option suppresses warnings about == null comparisons.
+    "esnext":       true,  // This option tells JSHint that your code uses ECMAScript 6 specific syntax.
     "evil":         false, // This option suppresses warnings about the use of eval.
     "expr":         false, // This option suppresses warnings about the use of expressions where normally you would expect to see assignments or function calls.
     "funcscope":    false, // This option suppresses warnings about declaring variables inside of control structures while accessing them later from the outside.

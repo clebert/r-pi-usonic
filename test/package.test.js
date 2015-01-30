@@ -2,14 +2,19 @@
 
 'use strict';
 
-var assert = require('extended-assert');
+var assert = require('expressive-assertion');
 var fs     = require('fs');
-var pkg    = require('../package');
 var path   = require('path');
+var pkg    = require('../package.json');
 
 describe('package.json', function () {
     it('defines an existing primary entry point', function () {
-        assert.strictEqual(pkg.main, 'lib/usonic.js');
-        assert.ok(fs.existsSync(path.join(__dirname, '..', pkg.main)));
+        assert(function () {
+            return pkg.main === 'lib/usonic.js';
+        });
+
+        assert(function () {
+            return fs.existsSync(path.join(__dirname, '..', pkg.main));
+        });
     });
 });

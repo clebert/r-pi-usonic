@@ -2,128 +2,120 @@
 
 'use strict';
 
-var assert = require('extended-assert');
-var mock   = assert.requireFileMock(__dirname, '../build/Release/usonic.node', {});
-var usonic = require('../lib/usonic');
+var assert       = require('expressive-assertion');
+var mock         = require('node-mock');
+var nativeUsonic = mock.require('../build/Release/usonic.node', __dirname, {});
+var usonic       = require('../lib/usonic.js');
+var ts           = require('typesystem');
 
 describe('usonic', function () {
     beforeEach(function () {
-        mock.getDistance = function () {};
+        nativeUsonic.getDistance = function () {};
     });
 
-    describe('.sensor()', function () {
-        it('returns a function', function () {
-            assert.strictEqual(typeof usonic.sensor(0, 0), 'function');
-            assert.strictEqual(typeof usonic.sensor(0, 0, 1), 'function');
-            assert.strictEqual(typeof usonic.sensor(0, 0, 2147483647), 'function');
-
-            assert.strictEqual(typeof usonic.sensor(0, 53), 'function');
-            assert.strictEqual(typeof usonic.sensor(0, 53, 1), 'function');
-            assert.strictEqual(typeof usonic.sensor(0, 53, 2147483647), 'function');
-
-            assert.strictEqual(typeof usonic.sensor(53, 0), 'function');
-            assert.strictEqual(typeof usonic.sensor(53, 0, 1), 'function');
-            assert.strictEqual(typeof usonic.sensor(53, 0, 2147483647), 'function');
-
-            assert.strictEqual(typeof usonic.sensor(53, 53), 'function');
-            assert.strictEqual(typeof usonic.sensor(53, 53, 1), 'function');
-            assert.strictEqual(typeof usonic.sensor(53, 53, 2147483647), 'function');
+    describe('.createSensor()', function () {
+        it('returns a sensor function', function () {
+            assert(function () {
+                return ts.isFunction(usonic.createSensor(0, 0));
+            }, function () {
+                return ts.isFunction(usonic.createSensor(0, 0, null));
+            }, function () {
+                return ts.isFunction(usonic.createSensor(0, 0, undefined));
+            }, function () {
+                return ts.isFunction(usonic.createSensor(0, 0, 500));
+            }, function () {
+                return ts.isFunction(usonic.createSensor(53, 53));
+            }, function () {
+                return ts.isFunction(usonic.createSensor(53, 53, null));
+            }, function () {
+                return ts.isFunction(usonic.createSensor(53, 53, undefined));
+            }, function () {
+                return ts.isFunction(usonic.createSensor(53, 53, 500));
+            });
         });
 
-        it('throws a type error', function () {
-            assert.throwsError(function () {
-                usonic.sensor();
-            }, 'TypeError', 'Illegal argument: undefined');
+        it('throws an assertion error', function () {
+            assert.throws(function () {
+                usonic.createSensor();
+            }, function (exception) {
+                return exception.name === 'AssertionError';
+            }, function (exception) {
+                return /ts\.isInteger\(value\) && value >= 0 && value <= 53/.test(exception);
+            });
 
-            assert.throwsError(function () {
-                usonic.sensor(NaN);
-            }, 'TypeError', 'Illegal argument: null');
+            assert.throws(function () {
+                usonic.createSensor(0);
+            }, function (exception) {
+                return exception.name === 'AssertionError';
+            }, function (exception) {
+                return /ts\.isInteger\(value\) && value >= 0 && value <= 53/.test(exception);
+            });
 
-            assert.throwsError(function () {
-                usonic.sensor(1.5);
-            }, 'TypeError', 'Illegal argument: 1.5');
-
-            assert.throwsError(function () {
-                usonic.sensor(-1);
-            }, 'TypeError', 'Illegal argument: -1');
-
-            assert.throwsError(function () {
-                usonic.sensor(54);
-            }, 'TypeError', 'Illegal argument: 54');
-
-            assert.throwsError(function () {
-                usonic.sensor(0);
-            }, 'TypeError', 'Illegal argument: undefined');
-
-            assert.throwsError(function () {
-                usonic.sensor(0, NaN);
-            }, 'TypeError', 'Illegal argument: null');
-
-            assert.throwsError(function () {
-                usonic.sensor(0, 1.5);
-            }, 'TypeError', 'Illegal argument: 1.5');
-
-            assert.throwsError(function () {
-                usonic.sensor(0, -1);
-            }, 'TypeError', 'Illegal argument: -1');
-
-            assert.throwsError(function () {
-                usonic.sensor(0, 54);
-            }, 'TypeError', 'Illegal argument: 54');
-
-            assert.throwsError(function () {
-                usonic.sensor(0, 0, NaN);
-            }, 'TypeError', 'Illegal argument: null');
-
-            assert.throwsError(function () {
-                usonic.sensor(0, 0, 1.5);
-            }, 'TypeError', 'Illegal argument: 1.5');
-
-            assert.throwsError(function () {
-                usonic.sensor(0, 0, 0);
-            }, 'TypeError', 'Illegal argument: 0');
+            assert.throws(function () {
+                usonic.createSensor(0, 0, NaN);
+            }, function (exception) {
+                return exception.name === 'AssertionError';
+            }, function (exception) {
+                return /ts\.isInteger\(value\) && value > 0/.test(exception);
+            });
         });
     });
 
     describe('sensor()', function () {
-        it('calls native usonic.getDistance() once with the given echoPin, triggerPin and with the default timeout', function () {
+        it('calls nativeUsonic.getDistance() once with the given echoPin, triggerPin and with the default timeout', function () {
             var called = 0;
 
-            mock.getDistance = function (echoPin, triggerPin, timeout) {
-                assert.strictEqual(echoPin, 0);
-                assert.strictEqual(triggerPin, 53);
-                assert.strictEqual(timeout, 750);
+            nativeUsonic.getDistance = function (echoPin, triggerPin, timeout) {
+                assert(function () {
+                    return echoPin === 0;
+                }, function () {
+                    return triggerPin === 53;
+                }, function () {
+                    return timeout === 750;
+                });
 
                 called += 1;
             };
 
-            usonic.sensor(0, 53)();
+            usonic.createSensor(0, 53)();
+            usonic.createSensor(0, 53, null)();
+            usonic.createSensor(0, 53, undefined)();
 
-            assert.strictEqual(called, 1);
+            assert(function () {
+                return called === 3;
+            });
         });
 
-        it('calls native usonic.getDistance() once with the given echoPin, triggerPin and timeout', function () {
+        it('calls nativeUsonic.getDistance() once with the given echoPin, triggerPin and timeout', function () {
             var called = 0;
 
-            mock.getDistance = function (echoPin, triggerPin, timeout) {
-                assert.strictEqual(echoPin, 0);
-                assert.strictEqual(triggerPin, 53);
-                assert.strictEqual(timeout, 450);
+            nativeUsonic.getDistance = function (echoPin, triggerPin, timeout) {
+                assert(function () {
+                    return echoPin === 53;
+                }, function () {
+                    return triggerPin === 0;
+                }, function () {
+                    return timeout === 500;
+                });
 
                 called += 1;
             };
 
-            usonic.sensor(0, 53, 450)();
+            usonic.createSensor(53, 0, 500)();
 
-            assert.strictEqual(called, 1);
+            assert(function () {
+                return called === 1;
+            });
         });
 
-        it('returns a number value', function () {
-            mock.getDistance = function () {
+        it('returns the returned value from nativeUsonic.getDistance() call', function () {
+            nativeUsonic.getDistance = function () {
                 return -1;
             };
 
-            assert.strictEqual(usonic.sensor(0, 53)(), -1);
+            assert(function () {
+                return usonic.createSensor(0, 53)() === -1;
+            });
         });
     });
 });
