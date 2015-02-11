@@ -47,8 +47,8 @@
     },
     "dependencies": {
         "expressive-assertion": "~1.4.1",
-        "math-statistics": "~1.1.3",
-        "nan": "~1.6.1",
+        "math-statistics": "~1.2.0",
+        "nan": "~1.6.2",
         "r-pi-gpio": "~2.2.3",
         "typesystem": "~5.0.0"
     },
