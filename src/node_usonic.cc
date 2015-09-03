@@ -9,11 +9,9 @@ namespace {
     volatile uint32_t *memory;
 
     static NAN_METHOD(getDistance) {
-        NanScope();
-
-        const int32_t echoPin = args[0]->ToInteger()->Value();
-        const int32_t triggerPin = args[1]->ToInteger()->Value();
-        const int32_t timeoutNs = args[2]->ToInteger()->Value() * 1000;
+        const int32_t echoPin = info[0]->ToInteger()->Value();
+        const int32_t triggerPin = info[1]->ToInteger()->Value();
+        const int32_t timeoutNs = info[2]->ToInteger()->Value() * 1000;
 
         RPiGpio::setDirection(memory, echoPin, RPiGpio::INPUT);
         RPiGpio::setDirection(memory, triggerPin, RPiGpio::OUTPUT);
@@ -21,8 +19,7 @@ namespace {
         RPiGpio::setLevel(memory, triggerPin, true);
 
         if (RPiClock::setDelayNs(10000) == -1) {
-            NanThrowError(node::ErrnoException(errno));
-            NanReturnUndefined();
+            return Nan::ThrowError(Nan::NanErrnoException(errno, "getDistance", "", NULL));
         }
 
         RPiGpio::setLevel(memory, triggerPin, false);
@@ -30,8 +27,7 @@ namespace {
         const int32_t loopStartNs = RPiClock::getNowNs();
 
         if (loopStartNs == -1) {
-            NanThrowError(node::ErrnoException(errno));
-            NanReturnUndefined();
+            return Nan::ThrowError(Nan::NanErrnoException(errno, "getDistance", "", NULL));
         }
 
         int32_t signalStartNs;
@@ -40,12 +36,11 @@ namespace {
             signalStartNs = RPiClock::getNowNs();
 
             if (signalStartNs == -1) {
-                NanThrowError(node::ErrnoException(errno));
-                NanReturnUndefined();
+                return Nan::ThrowError(Nan::NanErrnoException(errno, "getDistance", "", NULL));
             }
 
             if (RPiClock::getDurationNs(loopStartNs, signalStartNs) > timeoutNs) {
-                NanReturnValue(NanNew<v8::Number>(-1));
+                return info.GetReturnValue().Set(Nan::New<v8::Number>(-1));
             }
         } while(RPiGpio::getLevel(memory, echoPin) == false);
 
@@ -55,27 +50,35 @@ namespace {
             signalStopNs = RPiClock::getNowNs();
 
             if (signalStopNs == -1) {
-                NanThrowError(node::ErrnoException(errno));
-                NanReturnUndefined();
+                return Nan::ThrowError(Nan::NanErrnoException(errno, "getDistance", "", NULL));
             }
         } while(RPiGpio::getLevel(memory, echoPin) == true);
 
         const double distance = (double) RPiClock::getDurationNs(signalStartNs, signalStopNs) / 58000.0;
 
-        NanReturnValue(NanNew<v8::Number>(distance));
+        info.GetReturnValue().Set(Nan::New<v8::Number>(distance));
     }
 
-    void init(v8::Handle<v8::Object> exports) {
-        memory = RPiGpio::getMemory();
+    static NAN_METHOD(init) {
+        const uint32_t model = info[0]->ToInteger()->Value();
 
-        if (memory == NULL) {
-            NanThrowError(node::ErrnoException(errno));
-
-            return;
+        if (model == 1) {
+            memory = RPiGpio::getMemory(0x20200000);
+        } else if (model == 2) {
+            memory = RPiGpio::getMemory(0x3F200000);
         }
 
-        NODE_SET_METHOD(exports, "getDistance", getDistance);
+        if (memory == NULL) {
+            return Nan::ThrowError(Nan::NanErrnoException(errno, "init", "", NULL));
+        }
+
+        info.GetReturnValue().Set(Nan::Undefined());
     }
 
-    NODE_MODULE(usonic, init);
+    static NAN_MODULE_INIT(main) {
+        Nan::Set(target, Nan::New<v8::String>("getDistance").ToLocalChecked(), Nan::GetFunction(Nan::New<v8::FunctionTemplate>(getDistance)).ToLocalChecked());
+        Nan::Set(target, Nan::New<v8::String>("init").ToLocalChecked(), Nan::GetFunction(Nan::New<v8::FunctionTemplate>(init)).ToLocalChecked());
+    }
+
+    NODE_MODULE(usonic, main);
 }

@@ -28,6 +28,22 @@ var usonic = require('r-pi-usonic');
 
 ## API
 
+### usonic.init(callback)
+
+Creates the memory mapping with a device-specific memory offset.
+
+**You must call this function only once and before any other function.**
+
+```javascript
+usonic.init(function (error) {
+    if (error) {
+        ...
+    } else {
+        ...
+    }
+});
+```
+
 ### usonic.createSensor(echoPin, triggerPin, [timeout])
 
 Creates a new ultrasonic sensor function and returns it.
@@ -50,7 +66,7 @@ var distance = sensor();
 This example needs access to the physical memory, so it must run as root.
 
 ```sh
-sudo node node_modules/r-pi-usonic/examples/surveyor.js
+sudo node examples/surveyor.js
 ```
 
 ![Example: hcsr04.png](https://raw.githubusercontent.com/clebert/r-pi-usonic/master/resources/hcsr04.png)
@@ -93,7 +109,7 @@ sudo node node_modules/r-pi-usonic/examples/surveyor.js
 | GPIO 11 (SPI_SCLK) | 23  | 24  | GPIO 8 (SPI_CE0_N) |
 | GROUND             | 25  | 26  | GPIO 7 (SPI_CE1_N) |
 
-### Raspberry Pi Model B+
+### Raspberry Pi Model B+ / Raspberry Pi 2 Model B
 
 | Assignment         | Pin | Pin | Assignment         |
 | :----------------- | :-- | :-- | :----------------- |

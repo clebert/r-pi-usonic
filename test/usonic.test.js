@@ -16,27 +16,23 @@ describe('usonic', function () {
     describe('.createSensor()', function () {
         it('returns a sensor function', function () {
             assert(function () {
-                return ts.isFunction(usonic.createSensor(0, 0));
+                return ts.isFunction(usonic.createSensor(0, 0, null, true));
             }, function () {
-                return ts.isFunction(usonic.createSensor(0, 0, null));
+                return ts.isFunction(usonic.createSensor(0, 0, undefined, true));
             }, function () {
-                return ts.isFunction(usonic.createSensor(0, 0, undefined));
+                return ts.isFunction(usonic.createSensor(0, 0, 500, true));
             }, function () {
-                return ts.isFunction(usonic.createSensor(0, 0, 500));
+                return ts.isFunction(usonic.createSensor(53, 53, null, true));
             }, function () {
-                return ts.isFunction(usonic.createSensor(53, 53));
+                return ts.isFunction(usonic.createSensor(53, 53, undefined, true));
             }, function () {
-                return ts.isFunction(usonic.createSensor(53, 53, null));
-            }, function () {
-                return ts.isFunction(usonic.createSensor(53, 53, undefined));
-            }, function () {
-                return ts.isFunction(usonic.createSensor(53, 53, 500));
+                return ts.isFunction(usonic.createSensor(53, 53, 500, true));
             });
         });
 
         it('throws an assertion error', function () {
             assert.throws(function () {
-                usonic.createSensor();
+                usonic.createSensor(null, null, null, true);
             }, function (exception) {
                 return exception.name === 'AssertionError';
             }, function (exception) {
@@ -44,7 +40,7 @@ describe('usonic', function () {
             });
 
             assert.throws(function () {
-                usonic.createSensor(0);
+                usonic.createSensor(0, null, null, true);
             }, function (exception) {
                 return exception.name === 'AssertionError';
             }, function (exception) {
@@ -52,7 +48,7 @@ describe('usonic', function () {
             });
 
             assert.throws(function () {
-                usonic.createSensor(0, 0, NaN);
+                usonic.createSensor(0, 0, NaN, true);
             }, function (exception) {
                 return exception.name === 'AssertionError';
             }, function (exception) {
@@ -77,12 +73,11 @@ describe('usonic', function () {
                 called += 1;
             };
 
-            usonic.createSensor(0, 53)();
-            usonic.createSensor(0, 53, null)();
-            usonic.createSensor(0, 53, undefined)();
+            usonic.createSensor(0, 53, null, true)();
+            usonic.createSensor(0, 53, undefined, true)();
 
             assert(function () {
-                return called === 3;
+                return called === 2;
             });
         });
 
@@ -101,7 +96,7 @@ describe('usonic', function () {
                 called += 1;
             };
 
-            usonic.createSensor(53, 0, 500)();
+            usonic.createSensor(53, 0, 500, true)();
 
             assert(function () {
                 return called === 1;
@@ -114,7 +109,7 @@ describe('usonic', function () {
             };
 
             assert(function () {
-                return usonic.createSensor(0, 53)() === -1;
+                return usonic.createSensor(0, 53, null, true)() === -1;
             });
         });
     });

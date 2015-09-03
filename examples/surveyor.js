@@ -61,12 +61,18 @@ askForInteger('Echo pin', 24, function (echoPin) {
                 askForInteger('Measurements per sample', 5, function (rate) {
                     rl.close();
 
-                    initSensor({
-                        echoPin: echoPin,
-                        triggerPin: triggerPin,
-                        timeout: timeout,
-                        delay: delay,
-                        rate: rate
+                    usonic.init(function (error) {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            initSensor({
+                                echoPin: echoPin,
+                                triggerPin: triggerPin,
+                                timeout: timeout,
+                                delay: delay,
+                                rate: rate
+                            });
+                        }
                     });
                 });
             });
