@@ -1,16 +1,8 @@
+**THIS PROJECT IS NO LONGER MAINTAINED by clebert.**
+
 # r-pi-usonic
 
-> A high performance, memory mapped, Node.js API for the HC-SR04 ultrasonic sensor connected to a Raspberry Pi.
-
-[![license](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://raw.githubusercontent.com/clebert/r-pi-usonic/master/LICENSE)
-[![npm](http://img.shields.io/npm/v/r-pi-usonic.svg?style=flat)](https://www.npmjs.org/package/r-pi-usonic)
-[![downloads](http://img.shields.io/npm/dm/r-pi-usonic.svg?style=flat)](https://www.npmjs.org/package/r-pi-usonic)
-
-[![build](http://img.shields.io/travis/clebert/r-pi-usonic/master.svg?style=flat)](https://travis-ci.org/clebert/r-pi-usonic)
-[![coverage](http://img.shields.io/coveralls/clebert/r-pi-usonic/master.svg?style=flat)](https://coveralls.io/r/clebert/r-pi-usonic)
-[![code climate](http://img.shields.io/codeclimate/github/clebert/r-pi-usonic.svg?style=flat)](https://codeclimate.com/github/clebert/r-pi-usonic)
-[![dependencies](http://img.shields.io/david/clebert/r-pi-usonic.svg?style=flat)](https://david-dm.org/clebert/r-pi-usonic#info=dependencies&view=table)
-[![devDependencies](http://img.shields.io/david/dev/clebert/r-pi-usonic.svg?style=flat)](https://david-dm.org/clebert/r-pi-usonic#info=devDependencies&view=table)
+> [Deprecated] A high performance, memory mapped, Node.js API for the HC-SR04 ultrasonic sensor connected to a Raspberry Pi.
 
 ## Getting Started
 
